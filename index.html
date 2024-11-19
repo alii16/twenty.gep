@@ -13,6 +13,10 @@
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Cookie&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Smooch&family=Vina+Sans&display=swap");
+      * {
+        box-sizing: border-box;
+      }
+
       html {
         width: 100%;
         overflow-x: hidden; /* Mencegah scroll horizontal */
@@ -23,7 +27,8 @@
         width: 100%;
         height: 100vh;
         background: linear-gradient(to bottom, #1e2a47, #0d1b3a);
-        overflow: hidden; /* Cegah scroll horizontal */
+        overflow-x: hidden; /* Cegah scroll horizontal */
+        overflow-y: hidden;
         display: flex;
         flex-direction: column; /* Atur konten secara vertikal */
         justify-content: center; /* Pusatkan vertikal */
@@ -120,15 +125,14 @@
       /* Efek shooting star */
       .shooting-star {
         position: absolute;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          white
-        ); /* Kepala di bawah */
-        height: 2px; /* Ketebalan tetap */
-        animation: shoot 3s linear; /* Durasi dan animasi linear */
+        background: linear-gradient(90deg, transparent, white);
+        height: 2px;
+        animation: shoot 3s linear infinite;
         opacity: 0.8;
         z-index: 1;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
 
       @keyframes shoot {
