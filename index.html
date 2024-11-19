@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shooting Stars</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cookie&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Smooch&family=Vina+Sans&display=swap");
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: linear-gradient(to bottom, #1e2a47, #0d1b3a);
+        overflow: hidden; /* Cegah scroll horizontal */
+        display: flex;
+        flex-direction: column; /* Atur konten secara vertikal */
+        justify-content: center; /* Pusatkan vertikal */
+        align-items: center; /* Pusatkan horizontal */
+        text-align: center;
+        gap: 20px; /* Jarak antar elemen */
+      }
+
+      h1 {
+        font-family: "Cookie", cursive; /* Gunakan font Poppins */
+        margin-top: 10px;
+        color: white; /* Warna dasar teks */
+        text-shadow: 0 0 5px #f0adb8, /* Glow ringan */ 0 0 10px #f0adb8,
+          /* Glow sedang */ 0 0 20px #f0adb8, /* Glow intens */ 0 0 40px #f0adb8; /* Glow kuat */
+        font-size: 3rem; /* Atur ukuran teks */
+        font-weight: bold; /* Tebalkan teks */
+      }
+
+      .card {
+        margin-top: -25px;
+        width: 400px;
+        height: 500px;
+        z-index: 9;
+      }
+
+      .card img {
+        width: auto;
+        height: auto;
+      }
+
+      .card .card-title {
+        color: white; /* Warna dasar teks */
+        text-shadow: 0 0 5px #cecece, /* Glow ringan */ 0 0 10px #cecece,
+          /* Glow sedang */ 0 0 20px #cecece, /* Glow intens */ 0 0 40px #cecece;
+        font-size: 1.5rem; /* Atur ukuran teks */
+        font-weight: bold; /* Tebalkan teks */
+      }
+
+      .card p {
+        color: white; /* Warna dasar teks */
+        text-shadow: 0 0 5px #cecece, /* Glow ringan */ 0 0 10px #cecece,
+          /* Glow sedang */ 0 0 20px #cecece, /* Glow intens */ 0 0 40px #cecece;
+        margin-bottom: 20px;
+        text-align: start;
+      }
+
+      /* Efek garis berkedip */
+      .cursor {
+        display: inline-block;
+        background: white;
+        width: 2px;
+        height: 1em;
+        margin-left: 3px;
+        animation: blink 0.8s steps(2, start) infinite;
+      }
+
+      @keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Efek bintang */
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: twinkle 2s infinite ease-in-out;
+        z-index: 0;
+      }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.6;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.5);
+        }
+        100% {
+          opacity: 0.6;
+          transform: scale(1);
+        }
+      }
+
+      /* Efek shooting star */
+      .shooting-star {
+        position: absolute;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          white
+        ); /* Kepala di bawah */
+        height: 2px; /* Ketebalan tetap */
+        animation: shoot 3s linear; /* Durasi dan animasi linear */
+        opacity: 0.8;
+        z-index: 1;
+      }
+
+      @keyframes shoot {
+        0% {
+          transform: translate(0, 0) rotate(45deg); /* Mulai dari posisi acak */
+        }
+        100% {
+          transform: translate(200vw, 200vh) rotate(45deg); /* Berakhir di luar layar */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="landing">
+      <h1>Selamat Ulang Tahun</h1>
+    </div>
+    <!-- Card DaisyUI dengan kelas responsif -->
+    <div class="card glass w-96">
+      <figure>
+        <img src="her.jpg" alt="car!" />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title">Life hack</h2>
+        <p id="animated-text">
+          <span id="text"></span><span class="cursor">|</span>
+        </p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary">Learn now!</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.onload = function () {
+        // Menampilkan SweetAlert2 untuk konfirmasi
+        Swal.fire({
+          title: "Mau pake lagu ga?",
+          text: "Pilih Ya kalo mau!",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Ya, Mulai",
+          cancelButtonText: "Gausa",
+          showLoaderOnConfirm: true,
+          preConfirm: () => {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve();
+              }, 100); // Tunggu 500ms untuk animasi transisi
+            });
+          },
+        }).then((result) => {
+          const card = document.querySelector(".card");
+          // Tampilkan card dengan animasi, baik pengguna memilih Ya atau Tidak
+          card.classList.add("show");
+
+          if (result.isConfirmed) {
+            // Jika memilih 'Ya', putar lagu
+            const audio = new Audio("b-day.mp3"); // Path yang benar ke lagu di folder 'assets'
+            audio.play(); // Memulai pemutaran lagu
+          } else {
+            // Jika memilih 'Tidak', tidak ada aksi untuk memutar lagu
+            console.log("Lagu tidak diputar");
+          }
+        });
+      };
+      // Fungsi untuk membuat bintang tetap di langit
+      function generateStars() {
+        const numberOfStars = 150; // Jumlah bintang tetap
+        const body = document.body;
+
+        for (let i = 0; i < numberOfStars; i++) {
+          const star = document.createElement("div");
+          star.classList.add("star");
+
+          // Atur posisi acak untuk bintang tetap
+          star.style.width = Math.random() * 2 + "px"; // Ukuran bintang acak
+          star.style.height = star.style.width;
+          star.style.left = Math.random() * 100 + "%"; // Posisi horizontal acak
+          star.style.top = Math.random() * 100 + "%"; // Posisi vertikal acak
+          star.style.animationDuration = Math.random() * 2 + 1 + "s"; // Durasi animasi acak
+
+          body.appendChild(star);
+        }
+      }
+
+      // Fungsi untuk membuat shooting stars
+      function generateShootingStars() {
+        const body = document.body;
+
+        // Buat shooting star baru
+        const shootingStar = document.createElement("div");
+        shootingStar.classList.add("shooting-star");
+
+        // Panjang acak
+        const randomWidth = Math.random() * 150 + 50; // Panjang antara 50px hingga 200px
+        shootingStar.style.width = randomWidth + "px";
+
+        // Posisi awal acak
+        const startX = Math.random() * window.innerWidth; // Mulai dari posisi horizontal acak
+        const startY = Math.random() * window.innerHeight * 0.5; // Mulai dari setengah bagian atas layar
+        shootingStar.style.left = startX + "px";
+        shootingStar.style.top = startY + "px";
+
+        // Rotasi arah acak
+        const angle = Math.random() * 60 + 30; // Sudut jatuh antara 30° hingga 90°
+        shootingStar.style.transform = `rotate(${angle}deg)`;
+
+        // Tambahkan ke body
+        body.appendChild(shootingStar);
+
+        // Hapus shooting star setelah animasi selesai
+        setTimeout(() => {
+          shootingStar.remove();
+        }, 3000); // Durasi animasi
+      }
+
+      // Panggil fungsi untuk membuat bintang tetap
+      generateStars();
+
+      // Jalankan bintang jatuh secara acak dengan interval acak
+      setInterval(() => {
+        generateShootingStars();
+      }, Math.random() * 2000 + 1000); // Interval antara 1 detik hingga 3 detik
+
+      // Efek mengetik untuk deskripsi
+      const textElement = document.getElementById("text");
+      const cursor = document.querySelector(".cursor");
+      const textContent = "Hope your special day is as incredible as you are!"; // Teks deskripsi
+      let charIndex = 0;
+
+      function typeEffect() {
+        if (charIndex < textContent.length) {
+          textElement.textContent += textContent.charAt(charIndex); // Tambahkan karakter berikutnya
+          charIndex++;
+          setTimeout(typeEffect, 100); // Kecepatan mengetik (ms)
+        } else {
+          // Hapus teks setelah selesai dan mulai ulang
+          setTimeout(() => {
+            charIndex = 0;
+            textElement.textContent = ""; // Reset teks
+            typeEffect(); // Mulai ulang
+          }, 2000); // Delay 2 detik sebelum mengulang
+        }
+      }
+
+      // Mulai efek mengetik setelah halaman dimuat
+      document.addEventListener("DOMContentLoaded", typeEffect);
+    </script>
+  </body>
+</html>
