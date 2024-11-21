@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pibideyy</title>
+    <title>pibideyy</title>
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css"
       rel="stylesheet"
@@ -23,7 +23,7 @@
       }
       body {
         margin: 0;
-        padding: 20px;
+        padding: 15px;
         width: 100%;
         height: 100vh;
         background: linear-gradient(to bottom, #1e2a47, #0d1b3a);
@@ -137,9 +137,6 @@
         <p id="animated-text">
           <span id="text"></span><span class="cursor">|</span>
         </p>
-        <div class="card-actions justify-end">
-          <button class="btn btn-primary">Learn now!</button>
-        </div>
       </div>
     </div>
 
@@ -250,7 +247,7 @@
             "#4080ff",
             "#cc40ff",
           ];
-          for (let i = 0; i < 100; i++) {
+          for (let i = 0; i < 50; i++) {
             // Tambahkan jumlah partikel (100 partikel)
             particles.push({
               x,
@@ -309,7 +306,7 @@
         }
 
         // Luncurkan kembang api di lokasi acak secara berkala
-        setInterval(launchRandomFireworks, 500); // Setiap 500ms
+        setInterval(launchRandomFireworks, 1000); // Setiap 500ms
         animate();
 
       }
