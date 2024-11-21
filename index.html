@@ -122,27 +122,6 @@
         }
       }
 
-      /* Efek shooting star */
-      .shooting-star {
-        position: absolute;
-        background: linear-gradient(90deg, transparent, white);
-        height: 2px;
-        animation: shoot 3s linear infinite;
-        opacity: 0.8;
-        z-index: 1;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      @keyframes shoot {
-        0% {
-          transform: translate(0, 0) rotate(45deg); /* Mulai dari posisi acak */
-        }
-        100% {
-          transform: translate(200vw, 200vh) rotate(45deg); /* Berakhir di luar layar */
-        }
-      }
     </style>
   </head>
   <body>
@@ -155,7 +134,7 @@
         <img src="her.jpg" alt="car!" />
       </figure>
       <div class="card-body">
-        <h2 class="card-title">Life hack</h2>
+        <h2 class="card-title">Ghefira Novita Putri</h2>
         <p id="animated-text">
           <span id="text"></span><span class="cursor">|</span>
         </p>
@@ -218,44 +197,8 @@
         }
       }
 
-      // Fungsi untuk membuat shooting stars
-      function generateShootingStars() {
-        const body = document.body;
-
-        // Buat shooting star baru
-        const shootingStar = document.createElement("div");
-        shootingStar.classList.add("shooting-star");
-
-        // Panjang acak
-        const randomWidth = Math.random() * 150 + 50; // Panjang antara 50px hingga 200px
-        shootingStar.style.width = randomWidth + "px";
-
-        // Posisi awal acak
-        const startX = Math.random() * window.innerWidth; // Mulai dari posisi horizontal acak
-        const startY = Math.random() * window.innerHeight * 0.5; // Mulai dari setengah bagian atas layar
-        shootingStar.style.left = startX + "px";
-        shootingStar.style.top = startY + "px";
-
-        // Rotasi arah acak
-        const angle = Math.random() * 60 + 30; // Sudut jatuh antara 30° hingga 90°
-        shootingStar.style.transform = `rotate(${angle}deg)`;
-
-        // Tambahkan ke body
-        body.appendChild(shootingStar);
-
-        // Hapus shooting star setelah animasi selesai
-        setTimeout(() => {
-          shootingStar.remove();
-        }, 3000); // Durasi animasi
-      }
-
       // Panggil fungsi untuk membuat bintang tetap
       generateStars();
-
-      // Jalankan bintang jatuh secara acak dengan interval acak
-      setInterval(() => {
-        generateShootingStars();
-      }, Math.random() * 2000 + 1000); // Interval antara 1 detik hingga 3 detik
 
       // Efek mengetik untuk deskripsi
       const textElement = document.getElementById("text");
